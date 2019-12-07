@@ -10,12 +10,12 @@ Test2_2 = [[3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,-
 class TestAdvent7 < Test::Unit::TestCase
  
   def test_part1
-    assert_equal(Test1_1[1], Advent7.new(Test1_1[0]).part1)
-    assert_equal(Test1_2[1], Advent7.new(Test1_2[0]).part1)
-    assert_equal(Test1_3[1], Advent7.new(Test1_3[0]).part1)
+    assert_equal(Test1_1[1], Advent7.new(Test1_1[0]).part(1))
+    assert_equal(Test1_2[1], Advent7.new(Test1_2[0]).part(1))
+    assert_equal(Test1_3[1], Advent7.new(Test1_3[0]).part(1))
   end
   def test_part2
-    assert_equal(Test2_1[1], Advent7.new(Test2_1[0]).part2)
-    assert_equal(Test2_2[1], Advent7.new(Test2_2[0]).part2)
+    assert_equal(Test2_1[1], Advent7.new(Test2_1[0]).part(2))
+    assert_equal(Test2_2[1], Advent7.new(Test2_2[0]).part(2))
   end
 end
