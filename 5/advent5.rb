@@ -1,11 +1,12 @@
 $LOAD_PATH <<  '../lib'
 require 'intcode'
 class Advent5
-  def initialize(ag)
-    @args = ag
+  def initialize(co, phase)
+    @int_code = AoC::IntCode.new(co, [[phase], []])
   end
 
   def part1_2
-    AoC::IntCode.new(@args).diagnostic
+    @int_code.run
+    @int_code.diagnostic
   end
 end

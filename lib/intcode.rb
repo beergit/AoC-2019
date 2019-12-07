@@ -1,13 +1,17 @@
 module AoC
       
   class IntCode
-    def initialize(args)
-      @data = Array.new(args[:data])
-      @data[1] = args[:noun] if args.has_key? :noun
-      @data[2] = args[:verb] if args.has_key? :verb
-      @input = args[:input]
+    def initialize(co, pipe = nil)
+      @data = Array.new(co)
+      (@input, @output) = pipe
       @pc = 0
-      @output = []
+    end
+
+    def set_nv!(nv)
+      @data[1, 2] = nv
+    end  
+
+    def run
       loop do
         opcode = @data[@pc]%100
         par = (@data[@pc]/100).to_s.reverse.chars[0, 3]
@@ -20,25 +24,17 @@ module AoC
             write_data(3, read_data(1) * read_data(2))
             @pc += 4
           when 3
+            break if @input.empty?
             val = @input.shift
-            raise "No input data" unless val
             write_data(1, val)
             @pc += 2
           when 4
-              @output << read_data(1)              
-              @pc += 2
+            @output << read_data(1)              
+            @pc += 2
           when 5
-              if read_data(1) != 0
-                @pc = read_data(2)
-              else
-                @pc += 3
-              end  
+            @pc = (read_data(1) != 0  ? read_data(2) : @pc + 3)
           when 6
-            if read_data(1) == 0
-              @pc = read_data(2)
-            else
-              @pc += 3
-            end  
+            @pc = (read_data(1) == 0  ? read_data(2) : @pc + 3)
           when 7
             write_data(3, (read_data(1) < read_data(2) ? 1 : 0))
             @pc += 4
@@ -46,27 +42,22 @@ module AoC
             write_data(3, (read_data(1) == read_data(2) ? 1 : 0))
             @pc += 4
           when 99
+            @halt = true
             break
           else  
             raise "Error @#{pc}"
         end
       end  
     end
+    
+    def halted?()  @halt end
+    def result() @data.first end
+    def diagnostic() @output.last end
 
-    def result
-      @data.first
-    end
-
-    def diagnostic
-      @output.last
-    end
-     
+private 
     def write_data(offset, value)
-      if @param_modes[offset - 1] == 0
-        @data[@data[@pc + offset]] = value
-      else
-        @data[@pc + offset ] = value
-      end  
+      idx = (@param_modes[offset - 1] == 0 ?  @data[@pc + offset] : @pc + offset)
+      @data[idx] = value  
     end  
 
     def read_data(offset)
@@ -75,5 +66,3 @@ module AoC
   end
 
 end
-
-
