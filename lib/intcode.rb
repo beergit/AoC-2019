@@ -1,10 +1,13 @@
 module AoC
       
   class IntCode
+    attr_reader(:output)
+
     def initialize(co, pipe = nil)
       @data = Array.new(co)
       (@input, @output) = pipe
       @pc = 0
+      @base = 0 
     end
 
     def set_nv!(nv)
@@ -41,6 +44,9 @@ module AoC
           when 8
             write_data(3, (read_data(1) == read_data(2) ? 1 : 0))
             @pc += 4
+          when 9
+            @base += read_data(1)
+            @pc += 2
           when 99
             @halt = true
             break
@@ -50,19 +56,31 @@ module AoC
       end  
     end
     
-    def halted?()  @halt end
+    def halted?() @halt end
     def result() @data.first end
     def diagnostic() @output.last end
 
 private 
     def write_data(offset, value)
-      idx = (@param_modes[offset - 1] == 0 ?  @data[@pc + offset] : @pc + offset)
-      @data[idx] = value  
+      @data[modes(offset)] = value  
     end  
 
     def read_data(offset)
-      @param_modes[offset - 1] == 0 ?  @data[@data[@pc + offset]] : @data[@pc + offset]
-    end  
+      @data[modes(offset)].to_i
+    end
+
+    def modes(offset)
+      case @param_modes[offset - 1]
+        when 0
+          @data[@pc + offset]
+        when 1
+          @pc + offset
+        when 2
+          @base + @data[@pc + offset]
+        else
+          raise "mode error"
+      end
+    end
   end
 
 end
