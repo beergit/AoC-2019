@@ -17,7 +17,4 @@ class TestAdvent9 < Test::Unit::TestCase
     assert_equal(@test1_2[1], Advent9.new(@test1_2[0]).part[0].to_s.size)
     assert_equal([@test1_3[1]], Advent9.new(@test1_3[0]).part)
   end
-  def test_part2
-    assert(true)
-  end
 end
