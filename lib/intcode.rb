@@ -51,7 +51,7 @@ module AoC
             @halt = true
             break
           else  
-            raise "Error @#{pc}"
+            raise "Error @#{@pc}"
         end
       end  
     end
