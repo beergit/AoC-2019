@@ -1,11 +1,9 @@
 #!/usr/bin/ruby
 require_relative "advent14"
 require "test/unit"
-class TestAdvent1 < Test::Unit::TestCase
- 
-def setup
-code1 = <<EOF
-10 ORE => 10 A
+
+TC_1 = <<EOF
+0 ORE => 10 A
 1 ORE => 1 B
 7 A, 1 B => 1 C
 7 A, 1 C => 1 D
@@ -13,7 +11,7 @@ code1 = <<EOF
 7 A, 1 E => 1 FUEL
 EOF
 
-code1 = <<EOF
+TC_2 = <<EOF
 9 ORE => 2 A
 8 ORE => 3 B
 7 ORE => 5 C
@@ -23,7 +21,7 @@ code1 = <<EOF
 2 AB, 3 BC, 4 CA => 1 FUEL
 EOF
 
-code1 = <<EOF
+TC_3 = <<EOF
 157 ORE => 5 NZVS
 165 ORE => 6 DCFZ
 44 XJWVT, 5 KHKGT, 1 QDVJ, 29 NZVS, 9 GPVTF, 48 HKGWZ => 1 FUEL
@@ -34,9 +32,8 @@ code1 = <<EOF
 165 ORE => 2 GPVTF
 3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT
 EOF
-    180697 ORE for 1 FUEL:
 
-code1 = <<EOF
+TC_4 = <<EOF
 2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG
 17 NVRVD, 3 JNWZP => 8 VPVL
 53 STKFG, 6 MNCFX, 46 VJHF, 81 HVMC, 68 CXFTF, 25 GNMV => 1 FUEL
@@ -51,7 +48,7 @@ code1 = <<EOF
 176 ORE => 6 VJHF
 EOF
 
-code1 = <<EOF
+TC_5 = <<EOF
 171 ORE => 8 CNZTR
 7 ZLQW, 3 BMBT, 9 XCVML, 26 XMNCP, 1 WPTQ, 2 MZWV, 1 RJRHP => 4 PLWSL
 114 ORE => 4 BHXH
@@ -71,20 +68,20 @@ code1 = <<EOF
 5 BHXH, 4 VRPVC => 5 LTCX
 EOF
 
-@test1_1 = [code1, 31]
-@test1_2 = [code2, 165]
-@test1_3 = [code3, 13312]
-@test1_4 = [code4, 189697]
-@test1_5 = [code5, 2210736]
-  end  
+class TestAdvent14 < Test::Unit::TestCase
 
-
+  def setup
+    @test1_1 = [TC_1, 31]
+    @test1_2 = [TC_2, 165]
+    @test1_3 = [TC_3, 13312]
+    @test1_4 = [TC_4, 180697]
+    @test1_5 = [TC_5, 2210736]
+  end
   def test_part1
     assert_equal(@test1_1[1], Advent14.new(@test1_1[0]).part1)
     assert_equal(@test1_2[1], Advent14.new(@test1_2[0]).part1)
     assert_equal(@test1_3[1], Advent14.new(@test1_3[0]).part1)
     assert_equal(@test1_4[1], Advent14.new(@test1_4[0]).part1)
-  end
-  def test_part2
+    assert_equal(@test1_5[1], Advent14.new(@test1_5[0]).part1)
   end
 end
