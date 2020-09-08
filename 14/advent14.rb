@@ -1,7 +1,6 @@
 require_relative './chemical'
 
 class Advent14
-attr_reader (:chemicals)
   def initialize(receipes)
   @chemicals= {}
     receipes.each_line do |line|
@@ -15,7 +14,7 @@ attr_reader (:chemicals)
     rep = {} 
     receipe.keys.each do |k|
       unless  k == :ORE
-        r = chemicals[k].produce(receipe[k])
+        r = @chemicals[k].produce(receipe[k])
         r.each{|k, v| rep.has_key?(k) ? rep[k] += v : rep[k] = v}
       end
     end
@@ -23,7 +22,7 @@ attr_reader (:chemicals)
   end
 
   def part1
-    rep = produce(chemicals[:FUEL].receipe)
+    rep = produce(@chemicals[:FUEL].receipe)
     ore = rep[:ORE].to_i
     while rep.size > 1
       rep = produce(rep)

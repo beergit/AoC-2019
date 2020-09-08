@@ -1,5 +1,5 @@
 class Chemical
-  attr_reader(:name, :receipe, :quantity)
+  attr_reader(:name, :receipe)
   def initialize(receipe)
     if receipe.is_a? Symbol
       @name = receipe
@@ -19,11 +19,10 @@ class Chemical
       factor = 0
       @storage -= amount
     else
-      factor = ((amount - @storage)/quantity.to_f).ceil
-      @storage += factor*quantity - amount
+      factor = ((amount - @storage)/@quantity.to_f).ceil
+      @storage += factor*@quantity - amount
     end
     receipe.transform_values{|v| v*factor}
   end
 end
-
 
